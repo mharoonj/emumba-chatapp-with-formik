@@ -5,8 +5,9 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 
 const Sidebar = () => {
-    const {values} = useFormikContext()
+    const {values, errors,setFieldValue,setErrors, setTouched} = useFormikContext()
     console.log("formik values : ", values)
+    console.log("errors : ", errors)
     const chatWithIndex = values.users[values.chatWith]??null;
    
   return (
@@ -15,7 +16,14 @@ const Sidebar = () => {
         {values.users.map((user,userIndex)=>{
             if(userIndex == values.currentUser) return ;
 
-            return (<div key={userIndex+user} className={chatWithIndex && chatWithIndex === user?"sidebar-div-selected":"sidebar-div"} align="center">
+            return (<div
+            onClick={(e)=>{
+              e.preventDefault();
+              setFieldValue("chatWith",userIndex)
+              setErrors({})
+              setTouched({})
+            }}
+            key={userIndex+user} className={chatWithIndex && chatWithIndex === user?"sidebar-div-selected":"sidebar-div"} align="center">
               {chatWithIndex && chatWithIndex === user &&<FontAwesomeIcon
             className="mx-3"
             icon={faAngleRight}

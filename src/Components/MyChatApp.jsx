@@ -7,6 +7,21 @@ import MyTabs from "./MyTabs";
 import Sidebar from "./Sidebar";
 import ChatScreen from "./ChatScreen";
 
+const validate = values => {
+
+  const errors = {};
+ if(!values.currentMessage) {
+
+    errors.currentMessage = 'Required';
+
+  }
+
+
+
+  return errors;
+
+};
+
 const MyChatApp = () => (
   <div>
     <h1>Tabs</h1>
@@ -17,8 +32,10 @@ const MyChatApp = () => (
         {sender:"brent", receiver:"jared",message:"hello jared",read:false},
         {sender:"jared", receiver:"ian",message:"hello ian",read:false},],
         currentUser: 0,
-        chatWith: 1,
+        chatWith: 2,
+        currentMessage:""
       }}
+      validate={validate}
       onSubmit={(values) =>
         setTimeout(() => {
           alert(JSON.stringify(values, null, 2));
