@@ -1,39 +1,53 @@
 import React from "react";
 import { Formik, Form, Field, FieldArray } from "formik";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark, faUserPen } from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./styles.css";
 import MyTabs from "./MyTabs";
 import Sidebar from "./Sidebar";
 import ChatScreen from "./ChatScreen";
 
-const validate = values => {
-
+const validate = (values) => {
   const errors = {};
- if(!values.currentMessage) {
-
-    errors.currentMessage = 'Required';
-
+  if (!values.currentMessage) {
+    errors.currentMessage = "Required";
   }
 
-
+  if (!values.editNameField) {
+    errors.editNameField = "Required";
+  } else if (values.users.includes(values.editNameField)) {
+    errors.editNameField = "Name Already Taken ";
+  }
 
   return errors;
-
 };
 
 const MyChatApp = () => (
   <div>
-    <h1>Tabs</h1>
+    <br />
     <Formik
       initialValues={{
-        users: ["jared", "ian", "brent", "shfdshjfhksjdkfsdfkhsdjkl"],
-        messages:[{sender:"jared", receiver:"brent",message:"hello brent",read:false},
-        {sender:"brent", receiver:"jared",message:"hello jared",read:false},
-        {sender:"jared", receiver:"ian",message:"hello ian",read:false},],
+        users: ["Haroon", "Ali"],
+        messages: [
+          {
+            sender: "Haroon",
+            receiver: "Ali",
+            message: "hello Ali",
+            read: true,
+          },
+          {
+            sender: "Ali",
+            receiver: "Haroon",
+            message: "hello Haroon",
+            read: true,
+          }
+          
+        ],
         currentUser: 0,
-        chatWith: 2,
-        currentMessage:""
+        chatWith: 1,
+        currentMessage: "",
+        editNameField: "",
+        modal: false,
       }}
       validate={validate}
       onSubmit={(values) =>
@@ -42,7 +56,7 @@ const MyChatApp = () => (
         }, 500)
       }
     >
-      {({ values }) => (
+      {({ values, errors, setErrors, setTouched }) => (
         <Form>
           <FieldArray
             name="users"
@@ -60,9 +74,23 @@ const MyChatApp = () => (
                           values={values}
                           currentUser={values.currentUser}
                           arrayHelpers={arrayHelpers}
+                          errors={errors}
+                          setErrors={setErrors}
+                          setTouched={setTouched}
                         />
                       );
                     })}
+                  <div className="inline-block plus-sign-outer" align="center">
+                    <div
+                      className=" plus-sign"
+                      onClick={() => {
+                        const newUserName = `User ${values.users.length + 1}`;
+                        arrayHelpers.push(newUserName);
+                      }}
+                    >
+                      <FontAwesomeIcon className="mx-3" icon={faPlus} />
+                    </div>
+                  </div>
                 </div>
               );
             }}
@@ -71,23 +99,27 @@ const MyChatApp = () => (
           <hr></hr>
           <br />
 
-          <div
-            style={{
-              display: "flex",
-              flex: 1,
-              flexDirection: "row",
-              minHeight: "75vh",
-            }}
-          >
-            <div style={{ flex: 0.22 }}>
-              {/* sidebar */}
-              <Sidebar />
+          {values.users.length > 1 && (
+            <div
+              style={{
+                display: "flex",
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "space-evenly",
+                minHeight: "75vh",
+                maxHeight: "75vh",
+              }}
+            >
+              <div style={{ flex: 0.2 }}>
+                {/* sidebar */}
+                <Sidebar />
+              </div>
+              <div style={{ flex: 0.75 }}>
+                {/* Chat Screen */}
+                <ChatScreen />
+              </div>
             </div>
-            <div style={{ flex: 0.78 }}>
-              {/* Chat Screen */}
-              <ChatScreen />
-            </div>
-          </div>
+          )}
         </Form>
       )}
     </Formik>

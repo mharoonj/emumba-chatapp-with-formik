@@ -3,7 +3,7 @@ import { useFormikContext, FieldArray, Field, ErrorMessage } from "formik";
 import "./styles.css";
 const ChatScreen = () => {
   const scrollRef = useRef(null);
-  const { values, errors, setFieldValue } = useFormikContext();
+  const { values, errors, setFieldValue, setTouched } = useFormikContext();
   const currentUser = values.users[values.currentUser];
   const chatWith = values.users[values.chatWith];
   useEffect(() => {
@@ -11,6 +11,16 @@ const ChatScreen = () => {
       scrollRef.current.scrollIntoView();
     }
   }, []);
+
+  useEffect(() => {
+    const messages = values.messages.map((message) => {
+      if (message.receiver === currentUser && message.sender === chatWith) {
+        message.read = true;
+      }
+
+      return message;
+    });
+  });
 
   const filteredChat = () => {
     return values.messages.filter((message, index) => {
@@ -35,11 +45,9 @@ const ChatScreen = () => {
           {/* Messages render */}
           <div
             style={{
-            
               display: "flex",
               flex: 1,
               flexDirection: "column-reverse",
-    
             }}
             className="message-container-style"
           >
@@ -56,10 +64,12 @@ const ChatScreen = () => {
                   }}
                 >
                   <div
-                    style={{
-                  
-                    }}
-                    className="message-body"
+                    style={{}}
+                    className={
+                      isSender
+                        ? "message-body sender-message-div"
+                        : "message-body receiver-message-div"
+                    }
                   >
                     <p
                       style={{
@@ -78,33 +88,42 @@ const ChatScreen = () => {
         </div>
         <div className="message-field">
           {/* message Field */}
-          <FieldArray name="messages">
-         {({push})=>(
+          <FieldArray name="messages" className="w-100">
+            {({ push }) => (
               <div>
-              <div className="inline-block message-field-div">
-              <Field
-              name={`currentMessage`}
-              placeholder="Type Your Message here"
-              type="text"
-              className="message-field"
-            />
-            <ErrorMessage
-                          name={`currentMessage`}
-                          component="div"
-                          className="field-error"
-                        />
-              </div>
-              <div className="inline-block message-send-div">
-                  <button disabled={errors.currentMessage?true:false} onClick={(e)=>{
+                <div className="inline-block message-field-div">
+                  <Field
+                    name={`currentMessage`}
+                    placeholder="Type Your Message here"
+                    type="text"
+                    className="message-field"
+                  />
+                  <ErrorMessage
+                    name={`currentMessage`}
+                    component="div"
+                    className="field-error"
+                  />
+                </div>
+                <div className="inline-block message-send-div">
+                  <button
+                    disabled={errors.currentMessage ? true : false}
+                    onClick={(e) => {
                       e.preventDefault();
-                      push({sender:currentUser, receiver:chatWith, message:values.currentMessage, read:false})
-                      setFieldValue("currentMessage", "")
-                  }}>send</button>
+                      push({
+                        sender: currentUser,
+                        receiver: chatWith,
+                        message: values.currentMessage,
+                        read: false,
+                      });
+                      setFieldValue("currentMessage", "");
+                      setTouched({});
+                    }}
+                  >
+                    Send
+                  </button>
+                </div>
               </div>
-          </div>
-         )}
-         
-           
+            )}
           </FieldArray>
         </div>
       </div>
