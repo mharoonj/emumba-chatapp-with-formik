@@ -2,7 +2,7 @@
 
 This is a chat app made on frontend using formik library. This is an one to one chat with multiple people.
 
-##### features
+## features
 -  Users can be added.
 -  User name can be updated.
 	- Can not enter empty name.
