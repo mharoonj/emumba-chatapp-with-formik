@@ -12,8 +12,8 @@ This is a chat app made on frontend using formik library. This is an one to one 
 - Should change the color of active tab for better UI experience and to know which user is currently selected.
 -  Users list with whom we can chat, appears on the left sidebar.
 	- This list should not contain active user.
--  Chating component shows chat between two users( one selected from tabs and other from sidebar)
-	-
+- Chating component shows chat between two users( one selected from tabs and other from sidebar)
+
 - We can not send empty message to anyone.
 - Once the message is sent other user receives notification with count of unread messages.
 
