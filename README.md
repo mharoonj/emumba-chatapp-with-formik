@@ -1,70 +1,52 @@
-# Getting Started with Create React App
+#About this App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a chat app made on frontend using formik library. This is an one to one chat with multiple people.
 
-## Available Scripts
+##### features
+-  Users can be added.
+-  User name can be updated.
+	- Can not enter empty name.
+-	 User name should be unique, for example, no two users can have name as haroon
+-   User can be deleted.
+-  Active user can be selected from the tab.
+- Should change the color of active tab for better UI experience and to know which user is currently selected.
+-  Users list with whom we can chat, appears on the left sidebar.
+	- This list should not contain active user.
+-  Chating component shows chat between two users( one selected from tabs and other from sidebar)
+	-
+- We can not send empty message to anyone.
+- Once the message is sent other user receives notification with count of unread messages.
 
-In the project directory, you can run:
 
-### `yarn start`
+### Initial State of Formik
+Two users Ali and Haroon. One message from each side.
+![alt text](https://github.com/mharoonj/pics/blob/master/Initial%20state.JPG?raw=true)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### First look
+** new user javed also added
+![alt text](https://github.com/mharoonj/pics/blob/master/initial.JPG?raw=true)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### New Message from Haroon to Ali
+A new notification on tab Ali appears saying that he has one new message.
+![alt text](https://github.com/mharoonj/pics/blob/master/notification-on-new-msg.JPG?raw=true)
 
-### `yarn build`
+As soon as Ali opens message, it disappears.
+![alt text](https://github.com/mharoonj/pics/blob/master/notification%20gone%20when%20read.JPG?raw=true)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Editing User Name
+Renaming Ali to sikandar
+![alt text](https://github.com/mharoonj/pics/blob/master/renaming%20to%20sikandar.JPG?raw=true)
+Renamed to sikandar
+showing chat with sikandar and Haroon
+![alt text](https://github.com/mharoonj/pics/blob/master/renamed%20to%20sikandar.JPG?raw=true)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Adding more users
+Users can be added. Two users can have same name.  By default User name would be in this format User x, (where x is unique number)
+![alt text](https://github.com/mharoonj/pics/blob/master/adding%20more%20users.JPG?raw=true)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

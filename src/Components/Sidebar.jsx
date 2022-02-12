@@ -4,10 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 const Sidebar = () => {
-  const { values, errors, setFieldValue, setErrors, setTouched } =
+  const { values, setFieldValue, setErrors, setTouched } =
     useFormikContext();
-  console.log("formik values : ", values);
-  console.log("errors : ", errors);
   const chatWithIndex = values.users[values.chatWith] ?? null;
   const onClickSideBar = (e, userIndex) => {
     e.preventDefault();
@@ -16,7 +14,10 @@ const Sidebar = () => {
     setTouched({});
   };
   return (
-    <div style={{ flexDirection: "column", alignItems: "flex-start" }} className="sidebar-container">
+    <div
+      style={{ flexDirection: "column", alignItems: "flex-start" }}
+      className="sidebar-container"
+    >
       <div>
         {values.users.map((user, userIndex) => {
           const isSelected = chatWithIndex && chatWithIndex === user;
@@ -24,7 +25,8 @@ const Sidebar = () => {
           return (
             <div
               style={{
-                backgroundColor: isSelected ? "lightgrey" : "white",paddingTop:10,
+                backgroundColor: isSelected ? "lightgrey" : "white",
+                paddingTop: 10,
                 height: 40,
               }}
               onClick={(e) => onClickSideBar(e, userIndex)}

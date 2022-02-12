@@ -1,11 +1,15 @@
 import React from "react";
-import { Formik, Form, Field, FieldArray } from "formik";
+import { Formik, Form, FieldArray } from "formik";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import "./styles.css";
+
+// importing custom components
 import MyTabs from "./MyTabs";
 import Sidebar from "./Sidebar";
 import ChatScreen from "./ChatScreen";
+
+// importing styles file that is used in all components
+import "./styles.css";
 
 const validate = (values) => {
   const errors = {};
@@ -27,8 +31,8 @@ const MyChatApp = () => (
     <br />
     <Formik
       initialValues={{
-        users: ["Haroon", "Ali"],
-        messages: [
+        users: ["Haroon", "Ali"],  // all users
+        messages: [                // all messages
           {
             sender: "Haroon",
             receiver: "Ali",
@@ -40,14 +44,12 @@ const MyChatApp = () => (
             receiver: "Haroon",
             message: "hello Haroon",
             read: true,
-          }
-          
+          },
         ],
-        currentUser: 0,
-        chatWith: 1,
-        currentMessage: "",
-        editNameField: "",
-        modal: false,
+        currentUser: 0,         // current user index from users array
+        chatWith: 1,            // index of person with whom current user is chatting
+        currentMessage: "",     // message field state
+        editNameField: ""      // edit user name field state
       }}
       validate={validate}
       onSubmit={(values) =>
@@ -56,12 +58,11 @@ const MyChatApp = () => (
         }, 500)
       }
     >
-      {({ values, errors, setErrors, setTouched }) => (
+      {({ values, errors, setErrors, setTouched, setFieldValue }) => (
         <Form>
           <FieldArray
             name="users"
             render={(arrayHelpers) => {
-              console.log("array helper : ", arrayHelpers);
               return (
                 <div>
                   {values.users &&
@@ -84,8 +85,31 @@ const MyChatApp = () => (
                     <div
                       className=" plus-sign"
                       onClick={() => {
-                        const newUserName = `User ${values.users.length + 1}`;
+                        // getting array with 'User x' names
+                        const getLastUserId = values.users.filter((user) =>
+                          user.includes("User")
+                        );
+
+                        // getting the last id and making new user name
+                        let newUserName;
+                        if (getLastUserId.length > 0) {
+                          newUserName = `User ${
+                            parseInt(
+                              getLastUserId[getLastUserId.length - 1].split(
+                                " "
+                              )[1]
+                            ) + 1
+                          }`;
+                        } else {
+                          newUserName = `User ${values.users.length + 1}`;
+                        }
+
+                        // adding user in state users
                         arrayHelpers.push(newUserName);
+                        if (values.users.length == 1) {
+                          // setting chatWith to null because single user present and he has no one to chat with
+                          setFieldValue("chatWith", null);
+                        }
                       }}
                     >
                       <FontAwesomeIcon className="mx-3" icon={faPlus} />
@@ -116,7 +140,7 @@ const MyChatApp = () => (
               </div>
               <div style={{ flex: 0.75 }}>
                 {/* Chat Screen */}
-                <ChatScreen />
+                 <ChatScreen />
               </div>
             </div>
           )}

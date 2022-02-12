@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { useFormikContext, FieldArray, Field, ErrorMessage } from "formik";
-import "./styles.css";
+
 const ChatScreen = () => {
   const scrollRef = useRef(null);
   const { values, errors, setFieldValue, setTouched } = useFormikContext();
@@ -13,17 +13,17 @@ const ChatScreen = () => {
   }, []);
 
   useEffect(() => {
-    const messages = values.messages.map((message) => {
+    //   this will update because obj and arrays are passed by reference
+    values.messages.forEach((message) => {
       if (message.receiver === currentUser && message.sender === chatWith) {
         message.read = true;
       }
-
-      return message;
     });
   });
 
+  //   to get chat of two users
   const filteredChat = () => {
-    return values.messages.filter((message, index) => {
+    return values.messages.filter((message) => {
       if (
         (message.sender === currentUser || message.receiver === currentUser) &&
         (message.sender === chatWith || message.receiver === chatWith)
@@ -51,7 +51,6 @@ const ChatScreen = () => {
             }}
             className="message-container-style"
           >
-            <div>{/* <h1>sdjfjsl 1</h1> */}</div>
             {chat.reverse().map((item, index) => {
               let isSender = currentUser == item.sender;
               return (
