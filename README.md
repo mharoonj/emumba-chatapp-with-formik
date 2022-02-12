@@ -1,4 +1,4 @@
-#About this App
+# About this App
 
 This is a chat app made on frontend using formik library. This is an one to one chat with multiple people.
 
